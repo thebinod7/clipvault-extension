@@ -20,9 +20,11 @@ export default defineConfig({
             input: {
                 main: './index.html',
                 background: './src/background.ts',
+                content: './src/content.ts',
             },
             output: {
                 entryFileNames: (chunkInfo) => {
+                    if (chunkInfo.name === 'content') return 'content.js';
                     return chunkInfo.name === 'background'
                         ? 'background.js'
                         : 'assets/[name]-[hash].js';

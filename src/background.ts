@@ -1,8 +1,13 @@
 declare const chrome: any;
+
 chrome.runtime.onInstalled.addListener(() => {
-    console.log('Chrome extension installed');
+    console.log('✅ Extension installed');
 });
 
 chrome.action.onClicked.addListener((tab: any) => {
-    console.log('Extension icon clicked', tab);
+    if (tab.id) {
+        chrome.tabs.sendMessage(tab.id, { type: 'PING' }, (response: any) => {
+            console.log('Got response from content script:', response);
+        });
+    }
 });
